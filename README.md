@@ -8,6 +8,8 @@ Ermitteln Sie in welchem Temperaturbereich und Luftdruckbereich der Sensor mit w
 
 Lösung:
 
+![IMG_Operating_conditions](data\operating_conditions.JPG)
+
 
 __Aufgabe 2__
 
@@ -15,7 +17,7 @@ Wie wird der Sensor an den ESP32 angeschlossen? Zeichnen Sie ein Schaltbild (Ski
 
 Lösung:
 
-![IMG_Circuit](./data/circuit.JPG)
+![IMG_Circuit](data\circuit.JPG)
 
 __Aufgabe 3__
 

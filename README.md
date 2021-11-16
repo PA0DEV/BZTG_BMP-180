@@ -3,12 +3,14 @@
 Der BMP180 ist ein Sensor von Bosch zur Messung von Temperatur und Luftdruck.
 
 __Aufgabe 1__
+
 Ermitteln Sie in welchem Temperaturbereich und Luftdruckbereich der Sensor mit welcher Genauigkeit misst.
 
 Lösung:
 
 
 __Aufgabe 2__
+
 Wie wird der Sensor an den ESP32 angeschlossen? Zeichnen Sie ein Schaltbild (Skizze reicht). Wie muss die Spannungsversorgung erfolgen?
 
 Lösung:

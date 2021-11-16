@@ -39,7 +39,7 @@ Lösung:
         print("Pressure: %d hPa" %p)                        # print pressure
         
         time.sleep(10)                                      # delay 10s
-    
+    ```
 
 Output: 
 

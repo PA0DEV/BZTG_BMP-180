@@ -10,14 +10,14 @@ import st7789py
 from bmp180 import BMP180                               # import bmp180 libary
 from machine import Pin, SoftI2C, SoftSPI               # create an I2C bus object accordingly to the port you are using
 import time                                             # import time module
-from romfonts import vga1_16x16 as font
+from romfonts import vga1_16x16 as font                 # inmort the font for the display
 
 #-------------------------------------------------------
 # ## Initialize Sensor and Bus ##
 busSensor =  SoftI2C(scl=Pin(22), sda=Pin(21), freq=100000)   # create Software I2C Bus on Pins 22, 21
 bmp180 = BMP180(busSensor)                                    # initiate sensor
-bmp180.oversample_sett = 2                              # set oversample
-bmp180.baseline = 101325                                # set pressure baseline (1013,25hPa)
+bmp180.oversample_sett = 2                                    # set oversample
+bmp180.baseline = 101325                                      # set pressure baseline (1013,25hPa)
 
 #-------------------------------------------------------
 ##Initialize Display and Bus ##
@@ -48,15 +48,17 @@ while True:                                             # infinite loop
     p = (bmp180.pressure) / 100                         # read sensor pressure (hPa)
 
 
-    output1 = str("%d C" %(temp)) # print temperature
-    output2 = str("%d hPa" %p)
-    # print(output)
+    output1 = str("%d C" %(temp))                       # create format String for temperature
+    output2 = str("%d hPa" %p)                          # create format string for air-pressure
 
     if temp < 23:
-        tft.fill(st7789py.BLUE)
+        tft.fill(st7789py.BLUE)                         # if temp < 23°C fill the display background blue
     else:
-        tft.fill(st7789py.RED)
+        tft.fill(st7789py.RED)                          # if temp > 23°C fill the display background red
+
+    # print the temperature string on the display
     tft.text(font,output1, 10, 10, color=st7789py.WHITE, background=st7789py.BLACK)
+    # print the air-pressure string on the display
     tft.text(font,output2, 10, 50, color=st7789py.WHITE, background=st7789py.BLACK)
 
     time.sleep(10)                                      # delay 10s

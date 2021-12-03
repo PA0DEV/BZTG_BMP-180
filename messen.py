@@ -12,6 +12,10 @@ from machine import Pin, SoftI2C, SoftSPI               # imports for Board conn
 from time import sleep                                  # import time module for loop sleep
 from romfonts import vga2_16x16 as font                 # import the font for the display
 import bh1750
+import HTU2X
+from udfMethods import dewPoint
+
+
 
 
 #-------------------------------------------------------
@@ -21,6 +25,7 @@ bmp180 = BMP180(busSensor)                                    # instantiate sens
 bmp180.oversample_sett = 2                                    # set oversample
 bmp180.baseline = 101325                                      # set pressure baseline NN (1013,25hPa)
 lightSens = bh1750.BH1750(busSensor)
+humidSens = HTU2X.HTU21D(busSensor)
 
 #-------------------------------------------------------
 ## initialize display and bus ##
@@ -57,10 +62,17 @@ while True:
     temp = bmp180.temperature                           # read sensor temperature
     p = (bmp180.pressure) / 100                         # read sensor pressure (hPa)
     light = lightSens.luminance(bh1750.BH1750.ONCE_HIRES_1)
+    humid = humidSens.humidity
+    temp2 = humidSens.temperature
+    dp = dewPoint(temp, humid)
 
-    output1 = str("%d \xF8C     " %(temp))                       # create format String for temperature
-    output2 = str("%d hPa     " %p)                          # create format string for air-pressure
-    output3 = str("%d lux     " %light)
+    # print(humid)
+    output1 = str("%4.2f \xF8C     " %(temp))                       # create format String for temperature
+    output2 = str("%4.2f hPa     " %p)                          # create format string for air-pressure
+    output3 = str("%4.2f lux     " %light)
+    output4 = str("%4.2f %%     " %humid)
+    output5 = str("%4.2f \xF8C     " %temp2)
+    output6 = str("%4.2f \xF8C     " %dp)
 
     # if temp < 25:
     #     tft.fill(st7789py.GREEN)                        # fill display and show green led
@@ -84,9 +96,16 @@ while True:
                        
     # print the temperature string on the display
     tft.text(font, output1, 10, 10, color=st7789py.WHITE, background=st7789py.BLACK)
+
+    tft.text(font, output5, 10, 30, color=st7789py.WHITE, background=st7789py.BLACK)
+
     # print the air-pressure string on the display
     tft.text(font, output2, 10, 50, color=st7789py.WHITE, background=st7789py.BLACK)
 
-    tft.text(font, output3, 10, 90, color=st7789py.WHITE, background=st7789py.BLACK)
+    tft.text(font, output3, 10, 70, color=st7789py.WHITE, background=st7789py.BLACK)
+
+    tft.text(font, output4, 10, 90, color=st7789py.WHITE, background=st7789py.BLACK)
+
+    tft.text(font, output6, 10, 110, color=st7789py.WHITE, background=st7789py.BLACK)
 
     # sleep(0.1)                                           # delay 10s

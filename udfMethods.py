@@ -13,6 +13,7 @@ import math
 def dewPoint(temp, humid):
     """
     Calculate the dew point.
+    
 
     :param temp: The temperature measured in °C
     :param humid: The humidity measured in %

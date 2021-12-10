@@ -13,7 +13,7 @@ from time import sleep                                  # import time module for
 from romfonts import vga2_16x16 as font                 # import the font for the display
 import bh1750
 import HTU2X
-from udfMethods import dewPoint
+import udfMethods
 
 
 
@@ -63,8 +63,8 @@ while True:
     p = (bmp180.pressure) / 100                         # read sensor pressure (hPa)
     light = lightSens.luminance(bh1750.BH1750.ONCE_HIRES_1)
     humid = humidSens.humidity
-    temp2 = humidSens.temperature
-    dp = dewPoint(temp, humid)
+    temp2 = udfMethods.smoothMesure(10, light)
+    dp = udfMethods.dewPoint(temp, humid)
 
     # print(humid)
     output1 = str("%4.2f \xF8C     " %(temp))                       # create format String for temperature

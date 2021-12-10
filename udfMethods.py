@@ -1,14 +1,26 @@
 #
-# Name: Phillip Ahlers 
-# Datum:  5.10.2021
-# Klasse: ETS2021
+# name: Phillip Ahlers 
+# created:  10.12.2021
+# class: ETS2021
 #
-# Version: 1.0.0 
-# Aufgabe: 
-#Die Luftfeuchte in einem Kellerraum soll gemessen werden. 
-#Steigt die Luftfeuchte zu hoch, so soll eine Alarmierung stattfinden
+#
+# use:
+# - dewPoint: calculate the dewpoint based on humidity and temperature
+# - 
+# 
+# version: 2021_12_10_001
+# designed and tested on ESP32 TTGO
+# pin conenctions:
+# -/-
+# 
+# used libaries:
+# -/-
+# ----------------------------------------
+#
+
 
 import math
+import time
 
 def dewPoint(temp, humid):
     """
@@ -30,21 +42,30 @@ def dewPoint(temp, humid):
     return dewPoint
 
 
-# # Eingaben der Parameter
-# temp = 20                  # Eingabe Temperatur in °C
-# humidPercent = 45      # Eingabe Luftfeuchte in %
+def smoothMesure(cnt, val, delay = 0):
+    """
+    Calculate the dew point.
+    
 
 
-# humidity = humidPercent / 100   # Umrechnung % in ganze Zahl
+        :param cnt: the number of iterations to be used
+        :param val: the mesured value
+        :param delay: delay in between the mesurements
+        :return: returns the smoothed value of the mesurement
+    """
+    values = []
+    for i in range(cnt):
+        values.append(val)
+        time.sleep(delay)
 
-# # Gaskonstanten des Wassers
-# k2 = 7.5
-# k3 = 237.3
+    #cut the highest and lowest value
+    values.sort()
+    values.remove(values[0])
+    values.remove(values[(cnt-2)])
 
+    #get the average value
+    valLen = len(values)
+    valSum = sum(values)
+    ret = valSum / valLen
 
-# #berechnung des Taupunktes
-# step1 = ((k2 * temp) / (k3 + temp)) + math.log10(humidity)
-# step2 = ((k2 * k3) / (k3 + temp)) - math.log10(humidity)
-# dewPoint = k3 * (step1 / step2)
-
-# print("\nTemperatur: {} \u00b0C\nLuftfeuchtigkeit: {} %\nTaupunkt: {} \u00b0C".format(round(temp, 2), round(humidPercent, 2), round(dewPoint, 2)))
+    return ret

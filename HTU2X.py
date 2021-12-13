@@ -8,9 +8,9 @@ class HTU21D(object):
 
     def __init__(self, i2c):
         """Initiate the HUT21D
+        
         Args:
-            scl (int): Pin id where the sdl pin is connected to
-            sda (int): Pin id where the sda pin is connected to
+            i2c: the i2c bus the sensor is connected to
         """
         #self.i2c = SoftI2C(scl=Pin(scl), sda=Pin(sda), freq=100000)
         self.i2c = i2c

@@ -17,8 +17,6 @@
 # -/-
 # ----------------------------------------
 #
-
-
 import math
 import time
 
@@ -44,10 +42,8 @@ def dewPoint(temp, humid):
 
 def smoothMesure(cnt, val, delay = 0):
     """
-    Calculate the dew point.
+    Smothen the mesurement. Get "cnt" values, cut off highest and lowest value and get the average.
     
-
-
         :param cnt: the number of iterations to be used
         :param val: the mesured value
         :param delay: delay in between the mesurements

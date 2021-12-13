@@ -60,8 +60,8 @@ def smoothMesure(cnt, val, delay = 0):
 
     #cut the highest and lowest value
     values.sort()
-    values.remove(values[0])
-    values.remove(values[(cnt-2)])
+    values.pop(0)
+    values.pop()
 
     #get the average value
     valLen = len(values)
